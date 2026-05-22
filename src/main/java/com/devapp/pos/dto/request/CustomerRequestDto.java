@@ -18,6 +18,6 @@ public class CustomerRequestDto {
     private String address;
     @Positive(message = "Salary must be a positive value")
     @DecimalMin(value = "0.01", message = "Salary must be at least 0.01")
-    @DecimalMax(value = "10000000", message = "Salary must be at least 10,000,000.00")
+    @DecimalMax(value = "10000000", message = "Salary must not exceed 10,000,000.00")
     private String salary;
 }
