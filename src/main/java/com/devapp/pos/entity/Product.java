@@ -27,6 +27,6 @@ public class Product {
     @Column(name = "qty_on_hand")
     private int qtyOnHand;
 
-    @OneToMany(mappedBy = "customerOrder", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<OrderDetails> detailsList;
 }
