@@ -8,6 +8,7 @@ import com.devapp.pos.util.StandardResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import java.util.UUID;
 
@@ -15,9 +16,11 @@ import java.util.UUID;
 @RequestMapping("products")
 @RequiredArgsConstructor
 public class ProductController {
+
     private final ProductService productService;
 
     @PostMapping
+    @PreAuthorize("hasAnyRole('ADMIN','MANAGER')")
     public ResponseEntity<StandardResponseDto> createProduct(@RequestBody ProductRequestDto Dto) {
         productService.createProduct(Dto);
         return ResponseEntity
@@ -30,6 +33,7 @@ public class ProductController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN','MANAGER')")
     public ResponseEntity<StandardResponseDto> updateProduct(
             @RequestBody ProductRequestDto Dto,
             @PathVariable UUID id) {
@@ -44,6 +48,7 @@ public class ProductController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<StandardResponseDto> deleteProduct(@PathVariable UUID id) {
         productService.deleteProduct(id);
         return ResponseEntity
@@ -56,6 +61,7 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN','MANAGER')")
     public ResponseEntity<StandardResponseDto> findProductById(@PathVariable UUID id) {
         ProductResponseDto Product = productService.findProductById(id);
         return ResponseEntity
@@ -68,6 +74,7 @@ public class ProductController {
     }
 
     @GetMapping
+    @PreAuthorize("hasAnyRole('ADMIN','MANAGER')")
     public ResponseEntity<StandardResponseDto> searchProducts(
             @RequestParam(defaultValue = "") String searchText,
             @RequestParam(defaultValue = "0") int page,
