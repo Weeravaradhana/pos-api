@@ -2,7 +2,6 @@ package com.devapp.pos.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-
 import java.util.UUID;
 
 @Entity
@@ -12,6 +11,7 @@ import java.util.UUID;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class OrderDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
