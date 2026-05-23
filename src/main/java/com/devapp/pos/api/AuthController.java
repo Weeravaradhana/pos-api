@@ -1,6 +1,8 @@
 package com.devapp.pos.api;
 
+import com.devapp.pos.dto.request.LoginRequestDto;
 import com.devapp.pos.dto.request.RegisterRequestDto;
+import com.devapp.pos.dto.response.AuthResponseDTO;
 import com.devapp.pos.service.AuthService;
 import com.devapp.pos.util.StandardResponseDto;
 import jakarta.validation.Valid;
@@ -31,4 +33,16 @@ public class AuthController {
                         .build());
     }
 
+    @PostMapping("/login")
+    public ResponseEntity<StandardResponseDto> register
+            (@Valid @RequestBody LoginRequestDto dto){
+        AuthResponseDTO login = authService.login(dto);
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(StandardResponseDto.builder()
+                        .code(201)
+                        .message("User successfully logged..")
+                        .data(login)
+                        .build());
+    }
 }
