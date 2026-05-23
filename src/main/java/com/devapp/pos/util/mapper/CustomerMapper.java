@@ -1,4 +1,4 @@
-package com.devapp.pos.util;
+package com.devapp.pos.util.mapper;
 
 import com.devapp.pos.dto.request.CustomerRequestDto;
 import com.devapp.pos.dto.response.CustomerResponseDto;
