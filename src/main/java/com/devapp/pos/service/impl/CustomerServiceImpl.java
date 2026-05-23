@@ -7,7 +7,7 @@ import com.devapp.pos.entity.Customer;
 import com.devapp.pos.exception.EntryNotfoundException;
 import com.devapp.pos.repository.CustomerRepo;
 import com.devapp.pos.service.CustomerService;
-import com.devapp.pos.util.CustomerMapper;
+import com.devapp.pos.util.mapper.CustomerMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -69,7 +69,7 @@ public class CustomerServiceImpl implements CustomerService {
         return PageResponseDto.<CustomerResponseDto>builder()
                 .dataCount(customerRepo.countAllCustomers(searchText))
                 .dataList(
-                        customerRepo.countAllCustomers(searchText, PageRequest.of(page,size))
+                        customerRepo.findAllCustomers(searchText, PageRequest.of(page,size))
                                 .stream()
                                 .map(customerMapper::toCustomerResponseDto)
                                 .collect(Collectors.toList())
