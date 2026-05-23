@@ -1,5 +1,6 @@
 package com.devapp.pos.advisor;
 
+import com.devapp.pos.exception.DuplicateEntryException;
 import com.devapp.pos.exception.EntryNotfoundException;
 import com.devapp.pos.exception.ValidationException;
 import com.devapp.pos.util.StandardResponseDto;
@@ -28,6 +29,17 @@ public class AppWideExceptionHandler {
                 .status(HttpStatus.BAD_REQUEST)
                 .body(StandardResponseDto.builder()
                         .code(400)
+                        .message(ex.getMessage())
+                        .data(ex)
+                        .build());
+    }
+
+    @ExceptionHandler(DuplicateEntryException.class)
+    public ResponseEntity<StandardResponseDto> handleDuplicateEntryException(ValidationException ex) {
+        return ResponseEntity
+                .status(HttpStatus.CONFLICT)
+                .body(StandardResponseDto.builder()
+                        .code(409)
                         .message(ex.getMessage())
                         .data(ex)
                         .build());
