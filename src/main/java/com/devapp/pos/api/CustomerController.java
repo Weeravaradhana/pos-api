@@ -6,8 +6,8 @@ import com.devapp.pos.util.StandardResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.UUID;
 
 @RestController
@@ -18,6 +18,7 @@ public class CustomerController {
     private final CustomerService customerService;
 
     @PostMapping
+    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
     public ResponseEntity<StandardResponseDto> createCustomer(@RequestBody CustomerRequestDto dto){
         customerService.createCustomer(dto);
         return ResponseEntity
@@ -30,6 +31,7 @@ public class CustomerController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
     public ResponseEntity<StandardResponseDto> updateCustomer(@RequestBody CustomerRequestDto dto,
                                                               @PathVariable UUID id){
         customerService.updateCustomer(dto, id);
@@ -43,6 +45,7 @@ public class CustomerController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
     public ResponseEntity<StandardResponseDto> findCustomerById(@PathVariable UUID id){
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -54,6 +57,7 @@ public class CustomerController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<StandardResponseDto> deleteCustomerById(@PathVariable UUID id){
         customerService.deleteCustomer(id);
         return ResponseEntity
@@ -66,6 +70,7 @@ public class CustomerController {
     }
 
     @GetMapping("/list")
+    @PreAuthorize("hasAnyRole('ADMIN','MANAGER','USER')")
     public ResponseEntity<StandardResponseDto> findAll(){
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -77,6 +82,7 @@ public class CustomerController {
     }
 
     @GetMapping
+    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
     public ResponseEntity<StandardResponseDto> searchCustomer(
             @RequestParam(defaultValue = "") String searchText,
             @RequestParam(defaultValue = "0") int page,
